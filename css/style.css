@@ -1,3 +1,53 @@
 body {
-  background-color: #ffccaa;
+  background-color: #ddccbb;
+}
+
+main {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.display {
+  display: inline-block;
+}
+
+.smileyface {
+  display: inline-block;
+}
+
+.minesweeper {
+  border-top: 4px solid #ddd;
+  border-right: 4px solid #999;
+  border-bottom: 4px solid #999;
+  border-left: 4px solid #ddd;
+  margin: 0 auto;
+  margin-top: 3em;
+  max-width: 560px;
+}
+
+.tile {
+  background-color: #ddd;
+  border-top: 1px solid #fff;
+  border-right: 2px solid #666;
+  border-bottom: 2px solid #666;
+  border-left: 1px solid #fff;
+  display: inline-block;
+  height: 32px;
+  line-height: 0;
+  margin-top: -1px;
+  margin-bottom: -2px;
+  width: 32px;
+}
+
+.red {
+  background-color: red;
+  background-image: url("../images/red_mine_32px.jpg");
+  background-size: contain;
+}
+
+.mineCount {
+  margin: 0 auto;
+  max-width: 560px;
+  padding-top: 1em;
+  text-align: center;
 }
