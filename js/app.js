@@ -15,6 +15,33 @@ var compass = {
 };
 var tiles;
 
+function playSound() {
+  var audio = new Audio('audio/explosion_sound.mp3');
+  audio.play();
+}
+
+function pad(val) {
+  var valString = val + '';
+  if (valString.length < 2)  {
+    return '0' + valString;
+  } else {
+    return valString;
+  }
+}
+
+function setTime(minutesLabel, secondsLabel, totalSeconds) {
+  ++totalSeconds;
+  secondsLabel.innerHTML = pad(totalSeconds%60);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+}
+
+function timerDisplay() {
+  var minutesLabel = document.getElementById('minutes');
+  var secondsLabel = document.getElementById('seconds');
+  var totalSeconds = 0;
+  setInterval(setTime(minutesLabel, secondsLabel, totalSeconds), 1000);
+}
+
 // Place mines in random locations on the board and record position in an array
 function placeMines() {
   while (minesPlaced.length < minesNeeded) {
@@ -126,13 +153,15 @@ function logTile(e) {
     tile.setAttribute('class', 'tile redMine');
     // Call function to set all other mines grey
     greyMines(tiles.indexOf(tile));
+    playSound();
     // Remove click event listener from other tiles
     disableTiles();
   } else {
     var tileValue = tile.getAttribute('data-value');
     tileValue = parseInt(tileValue);
-    console.log('The tile clicked was number: ' + tileValue);
+    // console.log('The tile clicked was number: ' + tileValue);
     getTileArray(tileValue);
+    timerDisplay();
   }
 }
 
