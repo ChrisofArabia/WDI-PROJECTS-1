@@ -17,17 +17,17 @@ var compass = {
 var tiles;
 
 // Set class on tiles that have a mine in them.
-function setMineClass() {
-  for (var j = 0; j < tiles.length; j++) {
-    if (minesPlaced.includes(j)) {
-      // tiles[j].setAttribute('class', 'tile greyMine');
-    }
-  }
-  var redTiles = document.getElementsByClassName('greyMine');
-  var mineCountPara = document.getElementById('mineCount');
-  var mineCountText = 'Total number of mines on matrix: ' + redTiles.length;
-  mineCountPara.innerHTML = mineCountText;
-}
+// function setMineClass() {
+//   for (var j = 0; j < tiles.length; j++) {
+//     if (minesPlaced.includes(j)) {
+//       tiles[j].setAttribute('class', 'tile greyMine');
+//     }
+//   }
+//   var redTiles = document.getElementsByClassName('greyMine');
+//   var mineCountPara = document.getElementById('mineCount');
+//   var mineCountText = 'Total number of mines on matrix: ' + redTiles.length;
+//   mineCountPara.innerHTML = mineCountText;
+// }
 
 // Place mines in random locations on the board and record position in an array
 function placeMines() {
@@ -39,13 +39,46 @@ function placeMines() {
   }
 }
 
+function numberColor(minesTouched, tileElement) {
+  // ar tileClasses = tileElement.getAttribute('class');
+  // console.log(tileClasses);
+  switch (minesTouched) {
+    case 1:
+      tileElement.setAttribute('class', 'midBlue');
+      break;
+    case 2:
+      tileElement.setAttribute('class', 'green');
+      break;
+    case 3:
+      tileElement.setAttribute('class', 'tile red');
+      break;
+    case 4:
+      tileElement.setAttribute('class', 'tile darkBlue');
+      break;
+    case 5:
+      tileElement.setAttribute('class', 'tile darkRed');
+      break;
+    case 6:
+      tileElement.setAttribute('class', 'tile aqua');
+      break;
+    case 7:
+      tileElement.setAttribute('class', 'tile black');
+      break;
+    case 8:
+      tileElement.setAttribute('class', 'tile midGrey');
+      break;
+    default:
+      break;
+  }
+}
+
 // Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
   if (tiles[centreTile].getAttribute('data-checked')) return false;
 
   // Prevent being checked as the center again
   tiles[centreTile].setAttribute('data-checked', true);
-  tiles[centreTile].style.backgroundColor = 'blue';
+  tiles[centreTile].style.backgroundColor = '#eee';
 
   // Loop through to get the possible indicies
   var possibleIndices = Object.keys(compass).map(function(direction) {
@@ -70,9 +103,25 @@ function getTileArray(centreTile) {
   }).length;
 
   if (numberOfMinesTouching > 0) {
-    tiles[centreTile].innerHTML = numberOfMinesTouching;
+    var numberedTile = tiles[centreTile];
+    numberedTile.innerHTML = numberOfMinesTouching;
+    numberColor(numberOfMinesTouching, numberedTile);
   } else {
     return possibleIndices.forEach(getTileArray);
+  }
+}
+
+function greyMines(indexNum) {
+  // console.log('Tile index passed to greyMines: ' + indexNum);
+  var tiles = document.getElementsByTagName('li');
+  var tile;
+  // console.log(tiles);
+  for (var i = 0; i < minesPlaced.length; i++) {
+    if ( minesPlaced[i] !== indexNum ) {
+      tile = minesPlaced[i];
+      // console.log('Inside for loop within greyMines. minesPlaced[i] value is: ' + tile);
+      tiles[tile].setAttribute('class', 'tile greyMine');
+    }
   }
 }
 
@@ -82,11 +131,14 @@ function logTile(e) {
   var tile = this;
   if (minesPlaced.includes(tiles.indexOf(tile))) {
     tile.setAttribute('class', 'tile redMine');
+    // Call function to set all other mines grey
+    greyMines(tiles.indexOf(tile));
+  } else {
+    var tileValue = tile.getAttribute('data-value');
+    tileValue = parseInt(tileValue);
+    console.log('The tile clicked was number: ' + tileValue);
+    getTileArray(tileValue);
   }
-  var tileValue = tile.getAttribute('data-value');
-  tileValue = parseInt(tileValue);
-  console.log('The tile clicked was number: ' + tileValue);
-  getTileArray(tileValue);
 }
 
 // Add event listener for click event on each tile
@@ -114,7 +166,7 @@ function makeTiles() {
 function init() {
   makeTiles();
   placeMines();
-  setTimeout(setMineClass, 150);
+  // setTimeout(setMineClass, 150);
 }
 
 document.addEventListener('DOMContentLoaded', init, false);

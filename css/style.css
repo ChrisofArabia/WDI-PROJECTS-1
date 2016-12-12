@@ -7,6 +7,21 @@ main {
   max-width: 600px;
 }
 
+li {
+  background-color: silver;
+  border-top: 1px solid #fff;
+  border-right: 2px solid #666;
+  border-bottom: 2px solid #666;
+  border-left: 1px solid #fff;
+  display: inline-block;
+  float: left;
+  font-weight: bold;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  width: 32px;
+}
+
 .display {
   display: inline-block;
 }
@@ -26,19 +41,20 @@ main {
   overflow: hidden;
 }
 
-.tile {
-  background-color: #ddd;
+/*.tile {
+  background-color: silver;
   border-top: 1px solid #fff;
   border-right: 2px solid #666;
   border-bottom: 2px solid #666;
   border-left: 1px solid #fff;
   display: inline-block;
+  float: left;
+  font-weight: bolder;
   height: 32px;
   line-height: 32px;
-  width: 32px;
-  float: left;
   text-align: center;
-}
+  width: 32px;
+}*/
 
 .greyMine {
   background-color: red;
@@ -61,34 +77,50 @@ main {
 
 
 /* Number colours */
+/* 1 */
 .midBlue {
+  background-color: #eee;
   color: #00f;
 }
 
+/* 2 */
 .green {
-  color: #0f0;
+  background-color: #eee;
+  color: #32CD32;
 }
 
+/* 3 */
 .red {
+  background-color: #eee;
   color: #f00;
 }
 
+/* 4 */
 .darkBlue {
+  background-color: #eee;
   color: #009;
 }
 
-darkRed {
+/* 5 */
+.darkRed {
+  background-color: #eee;
   color: #300;
 }
 
+/* 6 */
 .aqua {
+  background-color: #eee;
   color: #0ff;
 }
 
+/* 7 */
 .black {
+  background-color: #eee;
   color: #000;
 }
 
+/* 8 */
 .midGrey {
+  background-color: #eee;
   color: #666;
 }
