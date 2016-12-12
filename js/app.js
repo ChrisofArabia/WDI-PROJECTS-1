@@ -16,9 +16,7 @@ function setMineClass() {
   }
   var redTiles = document.getElementsByClassName('greyMine');
   var mineCountPara = document.getElementById('mineCount');
-  console.log(mineCountPara);
   var mineCountText = 'Total number of mines on matrix: ' + redTiles.length;
-  console.log(mineCountText);
   mineCountPara.innerHTML = mineCountText;
 }
 
@@ -32,6 +30,27 @@ function placeMines() {
   }
 }
 
+// Remove any numbers outside the end of a line
+function removeLineEnds(tileArray) {
+  // console.log(tileArray);
+  var tempArray = [];
+  // Remove numbers to the right of the grid
+  for (var i = 0; i < tileArray.length; i++) {
+    if (!( (tileArray[i] + 1) % baseGridW === 0 )) {
+      tempArray.push(tileArray[i]);
+    }
+  }
+  console.log('tempArray is: ' + tempArray);
+  tileArray = [];
+  // remove lines to the left of the grid
+  for (var j = 0; j < tempArray.length; j++) {
+    if (!( tileArray[i] % baseGridW === 0 )) {
+      tileArray.push(tempArray[j]);
+    }
+  }
+  console.log('tileArray is: ' + tileArray);
+}
+
 // Remove any numbers below 0 or above total number of tiles on the board
 function removeRedundantNos(tileArray) {
   var tempArray = [];
@@ -41,7 +60,6 @@ function removeRedundantNos(tileArray) {
       tempArray.push(tileArray[i]);
     }
   }
-  console.log(tempArray);
   tileArray = [];
   // Remove items from array if above 255
   for (var j = 0; j < tempArray.length; j++) {
@@ -49,19 +67,19 @@ function removeRedundantNos(tileArray) {
       tileArray.push(tempArray[j]);
     }
   }
-  console.log(tileArray);
+  removeLineEnds(tileArray);
 }
 
 // Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
   tileArray.push(centreTile - baseGridH);         // above
-  tileArray.push(centreTile - (baseGridH + 1));   // above-right
+  tileArray.push(centreTile - (baseGridH - 1));   // above-right
   tileArray.push(centreTile + 1);                 // right
   tileArray.push(centreTile + (baseGridH + 1));   // beneath-right
   tileArray.push(centreTile + baseGridH);         // beneath
   tileArray.push(centreTile + (baseGridH - 1));   // beneath-left
   tileArray.push(centreTile - 1);                 // left
-  tileArray.push(centreTile - (baseGridH - 1));   // above-left
+  tileArray.push(centreTile - (baseGridH + 1));   // above-left
   console.log(tileArray);
   removeRedundantNos(tileArray);
 }
