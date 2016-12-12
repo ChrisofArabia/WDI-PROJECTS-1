@@ -42,6 +42,7 @@ function removeLineEnds(tileArray) {
   }
   console.log('tempArray is: ' + tempArray);
   tileArray = [];
+
   // remove lines to the left of the grid
   for (var j = 0; j < tempArray.length; j++) {
     if (!( tileArray[i] % baseGridW === 0 )) {
@@ -80,7 +81,7 @@ function getTileArray(centreTile) {
   tileArray.push(centreTile + (baseGridH - 1));   // beneath-left
   tileArray.push(centreTile - 1);                 // left
   tileArray.push(centreTile - (baseGridH + 1));   // above-left
-  console.log(tileArray);
+  console.log('The 8 tiles around the one clicked are: ' + tileArray);
   removeRedundantNos(tileArray);
 }
 
@@ -90,6 +91,7 @@ function logTile(tile) {
     e.preventDefault();
     var tileValue = tile.getAttribute('data-value');
     tileValue = parseInt(tileValue);
+    console.log('The tile clicked was number: ' + tileValue);
     getTileArray(tileValue);
   };
 }
