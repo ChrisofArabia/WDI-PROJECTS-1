@@ -3,7 +3,6 @@ var baseGridH = 16;
 var totalTiles = baseGridH * baseGridW;
 var minesNeeded = 40;
 var minesPlaced = [];
-// var tileArray = [];
 var compass = {
   n: -baseGridH,
   ne: -baseGridH + 1,
@@ -15,19 +14,6 @@ var compass = {
   nw: -baseGridH - 1
 };
 var tiles;
-
-// Set class on tiles that have a mine in them.
-// function setMineClass() {
-//   for (var j = 0; j < tiles.length; j++) {
-//     if (minesPlaced.includes(j)) {
-//       tiles[j].setAttribute('class', 'tile greyMine');
-//     }
-//   }
-//   var redTiles = document.getElementsByClassName('greyMine');
-//   var mineCountPara = document.getElementById('mineCount');
-//   var mineCountText = 'Total number of mines on matrix: ' + redTiles.length;
-//   mineCountPara.innerHTML = mineCountText;
-// }
 
 // Place mines in random locations on the board and record position in an array
 function placeMines() {
@@ -125,6 +111,13 @@ function greyMines(indexNum) {
   }
 }
 
+function disableTiles() {
+  var checkedTiles = document.getElementsByTagName('li');
+  for (var i = 0; i < checkedTiles.length; i++) {
+    checkedTiles[i].removeEventListener('click', logTile);
+  }
+}
+
 // Access index of tile being clicked
 function logTile(e) {
   e.preventDefault();
@@ -133,6 +126,8 @@ function logTile(e) {
     tile.setAttribute('class', 'tile redMine');
     // Call function to set all other mines grey
     greyMines(tiles.indexOf(tile));
+    // Remove click event listener from other tiles
+    disableTiles();
   } else {
     var tileValue = tile.getAttribute('data-value');
     tileValue = parseInt(tileValue);
