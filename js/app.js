@@ -15,8 +15,21 @@ var compass = {
 };
 var tiles;
 
-function playSound() {
-  var audio = new Audio('audio/explosion_sound.mp3');
+function playSound(sound) {
+  var audio;
+  switch(sound) {
+    case 'boomSound':
+      audio = new Audio('audio/explosion_sound.mp3');
+      break;
+    case 'tileSound':
+      audio = new Audio('audio/click_sound.mp3');
+      break;
+    case 'flag':
+      audio = new Audio('audio/flag_sound.mp3');
+      break;
+    default:
+      break;
+  }
   audio.play();
 }
 
@@ -153,15 +166,16 @@ function logTile(e) {
     tile.setAttribute('class', 'tile redMine');
     // Call function to set all other mines grey
     greyMines(tiles.indexOf(tile));
-    playSound();
+    playSound('boomSound');
     // Remove click event listener from other tiles
     disableTiles();
   } else {
     var tileValue = tile.getAttribute('data-value');
     tileValue = parseInt(tileValue);
     // console.log('The tile clicked was number: ' + tileValue);
-    getTileArray(tileValue);
+    playSound('tileSound');
     timerDisplay();
+    getTileArray(tileValue);
   }
 }
 
