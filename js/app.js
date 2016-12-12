@@ -1,17 +1,26 @@
-
 var baseGridW = 16;
 var baseGridH = 16;
 var totalTiles = baseGridH * baseGridW;
 var minesNeeded = 40;
 var minesPlaced = [];
-var tileArray = [];
+// var tileArray = [];
+var compass = {
+  n: -baseGridH,
+  ne: -baseGridH + 1,
+  e: 1,
+  se: baseGridH + 1,
+  s: baseGridH,
+  sw: baseGridH - 1,
+  w: -1,
+  nw: -baseGridH - 1
+};
+var tiles;
 
 // Set class on tiles that have a mine in them.
 function setMineClass() {
-  var tiles = document.getElementsByClassName('tile');
   for (var j = 0; j < tiles.length; j++) {
     if (minesPlaced.includes(j)) {
-      tiles[j].setAttribute('class', 'tile greyMine');
+      // tiles[j].setAttribute('class', 'tile greyMine');
     }
   }
   var redTiles = document.getElementsByClassName('greyMine');
@@ -30,104 +39,80 @@ function placeMines() {
   }
 }
 
-function checkForMines(tileArray) {
-  // Do something
-  // Compare eack item in tileArray with minesPlaced
-  // When a mine is found, increment a counter
-  // When all members of tileArray have been checked, pass onto next function to process info in counter
-}
-
-// Remove any numbers outside the end of a line
-function removeLineEnds(tileArray) {
-  // console.log(tileArray);
-  var tempArray = [];
-  // tempArray = tileArray;
-  // Remove numbers to the right of the grid
-  for (var i = 0; i < tileArray.length; i++) {
-    if (!( (tileArray[i] + 1) % baseGridW === 0 )) {
-      tempArray.push(tileArray[i]);
-    }
-  }
-  console.log('tempArray is: ' + tempArray);
-  tileArray = [];
-
-  // remove lines to the left of the grid
-  for (var j = 0; j < tempArray.length; j++) {
-    if (!( (tempArray[j] + 1) % baseGridW === 0 )) {
-      tileArray.push(tempArray[j]);
-    }
-  }
-  console.log('tileArray is: ' + tileArray);
-  checkForMines(tileArray);
-}
-
-// Remove any numbers below 0 or above total number of tiles on the board
-function removeRedundantNos(tileArray) {
-  var tempArray = [];
-  // Remove items from array if below 0
-  for (var i = 0; i < tileArray.length; i++) {
-    if (tileArray[i] >= 0) {
-      tempArray.push(tileArray[i]);
-    }
-  }
-  tileArray = [];
-  // Remove items from array if above 255
-  for (var j = 0; j < tempArray.length; j++) {
-    if (tempArray[j] < totalTiles)  {
-      tileArray.push(tempArray[j]);
-    }
-  }
-  removeLineEnds(tileArray);
-}
-
 // Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
-  tileArray.push(centreTile - baseGridH);         // above
-  tileArray.push(centreTile - (baseGridH - 1));   // above-right
-  tileArray.push(centreTile + 1);                 // right
-  tileArray.push(centreTile + (baseGridH + 1));   // beneath-right
-  tileArray.push(centreTile + baseGridH);         // beneath
-  tileArray.push(centreTile + (baseGridH - 1));   // beneath-left
-  tileArray.push(centreTile - 1);                 // left
-  tileArray.push(centreTile - (baseGridH + 1));   // above-left
-  console.log('The 8 tiles around the one clicked are: ' + tileArray);
-  removeRedundantNos(tileArray);
+  if (tiles[centreTile].getAttribute('data-checked')) return false;
+
+  // Prevent being checked as the center again
+  tiles[centreTile].setAttribute('data-checked', true);
+  tiles[centreTile].style.backgroundColor = 'blue';
+
+  // Loop through to get the possible indicies
+  var possibleIndices = Object.keys(compass).map(function(direction) {
+    var index = centreTile + compass[direction];
+    if (
+      index >= 0 &&
+      index < totalTiles &&
+      ((centreTile % baseGridH) - (index%baseGridH) < baseGridH-1) &&
+      (index%baseGridH) - (centreTile % baseGridH) < baseGridH-1 &&
+      !tiles[index].getAttribute('data-checked') // Ignore any which have been checked as center
+    ) {
+      return index;
+    }
+  }).filter(function(x) {
+    return typeof x !== 'undefined';
+  });
+
+  var numberOfMinesTouching = possibleIndices.map(function(index) {
+    if (minesPlaced.includes(index)) return index;
+  }).filter(function(x) {
+    return typeof x !== 'undefined';
+  }).length;
+
+  if (numberOfMinesTouching > 0) {
+    tiles[centreTile].innerHTML = numberOfMinesTouching;
+  } else {
+    return possibleIndices.forEach(getTileArray);
+  }
 }
 
 // Access index of tile being clicked
-function logTile(tile) {
-  return function(e) {
-    e.preventDefault();
-    var tileValue = tile.getAttribute('data-value');
-    tileValue = parseInt(tileValue);
-    console.log('The tile clicked was number: ' + tileValue);
-    getTileArray(tileValue);
-  };
+function logTile(e) {
+  e.preventDefault();
+  var tile = this;
+  if (minesPlaced.includes(tiles.indexOf(tile))) {
+    tile.setAttribute('class', 'tile redMine');
+  }
+  var tileValue = tile.getAttribute('data-value');
+  tileValue = parseInt(tileValue);
+  console.log('The tile clicked was number: ' + tileValue);
+  getTileArray(tileValue);
 }
 
 // Add event listener for click event on each tile
 function addListener() {
-  var tiles = document.getElementsByClassName('tile');
+  tiles = document.getElementsByClassName('tile');
+  tiles = [].slice.call(tiles);
   for (var i = 0; i < tiles.length; i++) {
-    tiles[i].addEventListener('click', logTile(tiles[i]));
+    tiles[i].addEventListener('click', logTile);
   }
 }
 
 // Create tiles on board
 function makeTiles() {
+  var msBoard = document.getElementById('minesweeper');
   for (var i = 0; i < totalTiles; i++) {
-    var msBoard = document.getElementById('minesweeper');
     var tile = document.createElement('li');
     tile.setAttribute('class', 'tile');
     tile.setAttribute('data-value', i);
     msBoard.appendChild(tile);
   }
+  addListener();
 }
 
 // Start application
 function init() {
   makeTiles();
-  addListener();
   placeMines();
   setTimeout(setMineClass, 150);
 }
