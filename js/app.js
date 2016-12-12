@@ -30,6 +30,13 @@ function placeMines() {
   }
 }
 
+function checkForMines(tileArray) {
+  // Do something
+  // Compare eack item in tileArray with minesPlaced
+  // When a mine is found, increment a counter
+  // When all members of tileArray have been checked, pass onto next function to process info in counter
+}
+
 // Remove any numbers outside the end of a line
 function removeLineEnds(tileArray) {
   // console.log(tileArray);
@@ -50,6 +57,7 @@ function removeLineEnds(tileArray) {
     }
   }
   console.log('tileArray is: ' + tileArray);
+  checkForMines(tileArray);
 }
 
 // Remove any numbers below 0 or above total number of tiles on the board
