@@ -33,6 +33,11 @@ function playSound(sound) {
   audio.play();
 }
 
+function setFrowney() {
+  var frowney = document.getElementById('smileyFace');
+  frowney.setAttribute('src', 'images/frowney.jpg');
+}
+
 function pad(val) {
   var valString = val + '';
   if (valString.length < 2)  {
@@ -167,6 +172,7 @@ function logTile(e) {
     // Call function to set all other mines grey
     greyMines(tiles.indexOf(tile));
     playSound('boomSound');
+    setFrowney();
     // Remove click event listener from other tiles
     disableTiles();
   } else {
