@@ -41,6 +41,7 @@ function checkForMines(tileArray) {
 function removeLineEnds(tileArray) {
   // console.log(tileArray);
   var tempArray = [];
+  // tempArray = tileArray;
   // Remove numbers to the right of the grid
   for (var i = 0; i < tileArray.length; i++) {
     if (!( (tileArray[i] + 1) % baseGridW === 0 )) {
@@ -52,7 +53,7 @@ function removeLineEnds(tileArray) {
 
   // remove lines to the left of the grid
   for (var j = 0; j < tempArray.length; j++) {
-    if (!( tileArray[i] % baseGridW === 0 )) {
+    if (!( (tempArray[j] + 1) % baseGridW === 0 )) {
       tileArray.push(tempArray[j]);
     }
   }
