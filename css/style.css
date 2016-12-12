@@ -39,7 +39,13 @@ main {
   width: 32px;
 }
 
-.red {
+.greyMine {
+  background-color: red;
+  background-image: url("../images/grey_mine_32px.jpg");
+  background-size: contain;
+}
+
+.redMine {
   background-color: red;
   background-image: url("../images/red_mine_32px.jpg");
   background-size: contain;
@@ -50,4 +56,38 @@ main {
   max-width: 560px;
   padding-top: 1em;
   text-align: center;
+}
+
+
+/* Number colours */
+.midBlue {
+  color: #00f;
+}
+
+.green {
+  color: #0f0;
+}
+
+.red {
+  color: #f00;
+}
+
+.darkBlue {
+  color: #009;
+}
+
+darkRed {
+  color: #300;
+}
+
+.aqua {
+  color: #0ff;
+}
+
+.black {
+  color: #000;
+}
+
+.midGrey {
+  color: #666;
 }

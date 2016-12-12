@@ -6,30 +6,36 @@ var minesNeeded = 40;
 var minesPlaced = [];
 var tileArray = [];
 
+// Set class on tiles that have a mine in them.
 function setMineClass() {
-  // Set class on tiles that have a mine in them.
   var tiles = document.getElementsByClassName('tile');
   for (var j = 0; j < tiles.length; j++) {
     if (minesPlaced.includes(j)) {
-      tiles[j].setAttribute('class', 'tile red');
+      tiles[j].setAttribute('class', 'tile greyMine');
     }
   }
-  var redTiles = document.getElementsByClassName('red');
-  $('.mineCount').html('Total number of mines on matrix: ' + redTiles.length);
+  var redTiles = document.getElementsByClassName('greyMine');
+  var mineCountPara = document.getElementById('mineCount');
+  console.log(mineCountPara);
+  var mineCountText = 'Total number of mines on matrix: ' + redTiles.length;
+  console.log(mineCountText);
+  mineCountPara.innerHTML = mineCountText;
 }
 
+// Place mines in random locations on the board and record position in an array
 function placeMines() {
   while (minesPlaced.length < minesNeeded) {
     var mineIndex = Math.floor(Math.random() * totalTiles);
-
     if (!minesPlaced.includes(mineIndex)) {
       minesPlaced.push(mineIndex);
     }
   }
 }
 
+// Remove any numbers below 0 or above total number of tiles on the board
 function removeRedundantNos(tileArray) {
   var tempArray = [];
+  // Remove items from array if below 0
   for (var i = 0; i < tileArray.length; i++) {
     if (tileArray[i] >= 0) {
       tempArray.push(tileArray[i]);
@@ -37,6 +43,7 @@ function removeRedundantNos(tileArray) {
   }
   console.log(tempArray);
   tileArray = [];
+  // Remove items from array if above 255
   for (var j = 0; j < tempArray.length; j++) {
     if (tempArray[j] < totalTiles)  {
       tileArray.push(tempArray[j]);
@@ -45,6 +52,7 @@ function removeRedundantNos(tileArray) {
   console.log(tileArray);
 }
 
+// Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
   tileArray.push(centreTile - baseGridH);         // above
   tileArray.push(centreTile - (baseGridH + 1));   // above-right
@@ -58,6 +66,7 @@ function getTileArray(centreTile) {
   removeRedundantNos(tileArray);
 }
 
+// Access index of tile being clicked
 function logTile(tile) {
   return function(e) {
     e.preventDefault();
@@ -67,6 +76,7 @@ function logTile(tile) {
   };
 }
 
+// Add event listener for click event on each tile
 function addListener() {
   var tiles = document.getElementsByClassName('tile');
   for (var i = 0; i < tiles.length; i++) {
@@ -74,6 +84,7 @@ function addListener() {
   }
 }
 
+// Create tiles on board
 function makeTiles() {
   for (var i = 0; i < totalTiles; i++) {
     var msBoard = document.getElementById('minesweeper');
@@ -84,6 +95,7 @@ function makeTiles() {
   }
 }
 
+// Start application
 function init() {
   makeTiles();
   addListener();
