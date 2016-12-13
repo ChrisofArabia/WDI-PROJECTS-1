@@ -15,6 +15,13 @@ var compass = {
 };
 var tiles;
 
+function resetClock() {
+  var minutesLabel = document.getElementById('minutes');
+  var secondsLabel = document.getElementById('seconds');
+  minutesLabel.innerHTML = pad('0', 2);
+  secondsLabel.innerHTML = pad('0', 2);
+}
+
 function resetMineCounter() {
   var minesDisplay = document.getElementById('display1');
   minesDisplay.innerHTML = pad(minesNeeded, 3);
@@ -34,6 +41,7 @@ function gameReset() {
   placeMines();
   setSmiley();
   resetMineCounter();
+  resetClock();
 }
 
 function restartListener() {
