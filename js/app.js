@@ -17,7 +17,7 @@ var tiles;
 
 function resetMineCounter() {
   var minesDisplay = document.getElementById('display1');
-  minesDisplay.innerHTML = '040';
+  minesDisplay.innerHTML = pad(minesNeeded, 3);
 }
 
 function setSmiley() {
@@ -65,9 +65,9 @@ function setFrowney() {
   frowney.setAttribute('src', 'images/frowney.jpg');
 }
 
-function pad(val) {
+function pad(val, padLength) {
   var valString = val + '';
-  if (valString.length < 2)  {
+  if (valString.length < padLength)  {
     return '0' + valString;
   } else {
     return valString;
@@ -76,8 +76,8 @@ function pad(val) {
 
 function setTime(minutesLabel, secondsLabel, totalSeconds) {
   ++totalSeconds;
-  secondsLabel.innerHTML = pad(totalSeconds%60);
-  minutesLabel.innerHTML = pad(parseInt(totalSeconds/60));
+  secondsLabel.innerHTML = pad(totalSeconds%60, 2);
+  minutesLabel.innerHTML = pad(parseInt(totalSeconds/60), 2);
 }
 
 function timerDisplay() {
