@@ -18,7 +18,6 @@ header {
 }
 
 button {
-
   background: #d9d9d9;
   background: -webkit-gradient(linear, left top, left bottom, from(#9c9c9c), to(#d9d9d9));
   background: -webkit-linear-gradient(top, #9c9c9c, #d9d9d9);
