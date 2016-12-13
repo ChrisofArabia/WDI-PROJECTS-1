@@ -24,9 +24,6 @@ button {
   background: -moz-linear-gradient(top, #9c9c9c, #d9d9d9);
   background: -ms-linear-gradient(top, #9c9c9c, #d9d9d9);
   background: -o-linear-gradient(top, #9c9c9c, #d9d9d9);
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
   border-top: 1px solid #f7f7f7;
   -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
   -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
@@ -50,6 +47,7 @@ button:active {
 }
 
 main {
+  background-color: #666;
   border-top: 5px solid #999;
   border-right: 5px solid #ddd;
   border-bottom: 5px solid #ddd;
@@ -140,6 +138,11 @@ width: 32px;
 .redMine {
   background-color: red;
   background-image: url("../images/red_mine_32px.jpg");
+  background-size: contain;
+}
+
+.flag {
+  background-image: url("../images/flag_32px.png");
   background-size: contain;
 }
 

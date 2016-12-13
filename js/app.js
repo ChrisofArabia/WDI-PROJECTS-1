@@ -3,6 +3,7 @@ var baseGridH = 16;
 var totalTiles = baseGridH * baseGridW;
 var minesNeeded = 40;
 var minesPlaced = [];
+var tiles;
 var compass = {
   n: -baseGridH,
   ne: -baseGridH + 1,
@@ -13,7 +14,17 @@ var compass = {
   w: -1,
   nw: -baseGridH - 1
 };
-var tiles;
+
+function pad(val, padLength) {
+  var valString = val + '';
+  if (padLength - valString.length === 1 )  {
+    return '0' + valString;
+  } else if ( padLength - valString.length === 2 ) {
+    return '00' + valString;
+  } else {
+    return valString;
+  }
+}
 
 function resetClock() {
   var minutesLabel = document.getElementById('minutes');
@@ -30,6 +41,11 @@ function resetMineCounter() {
 function setSmiley() {
   var smiley = document.getElementById('smileyFace');
   smiley.setAttribute('src', 'images/smiley.jpg');
+}
+
+function setFrowney() {
+  var frowney = document.getElementById('smileyFace');
+  frowney.setAttribute('src', 'images/frowney.jpg');
 }
 
 function gameReset() {
@@ -66,20 +82,6 @@ function playSound(sound) {
       break;
   }
   audio.play();
-}
-
-function setFrowney() {
-  var frowney = document.getElementById('smileyFace');
-  frowney.setAttribute('src', 'images/frowney.jpg');
-}
-
-function pad(val, padLength) {
-  var valString = val + '';
-  if (valString.length < padLength)  {
-    return '0' + valString;
-  } else {
-    return valString;
-  }
 }
 
 function setTime(minutesLabel, secondsLabel, totalSeconds) {
@@ -220,12 +222,31 @@ function logTile(e) {
   }
 }
 
+function reduceMineCount() {
+  var mineCount = document.getElementById('minecount');
+  var mineCountValue = parseInt(mineCount.innerHTML);
+  mineCountValue = mineCountValue - 1;
+  console.log(mineCountValue);
+  if ( mineCountValue >= 0) {
+    mineCount.innerHTML = pad(mineCountValue, 3);
+  }
+}
+
+// Set the flag icon on right-click
+function setFlag(e) {
+  e.preventDefault();
+  this.setAttribute('class', 'tile flag');
+  reduceMineCount();
+  return false;
+}
+
 // Add event listener for click event on each tile
 function addListener() {
   tiles = document.getElementsByClassName('tile');
   tiles = [].slice.call(tiles);
   for (var i = 0; i < tiles.length; i++) {
     tiles[i].addEventListener('click', logTile);
+    tiles[i].addEventListener('contextmenu', setFlag, false);
   }
 }
 
@@ -243,7 +264,6 @@ function makeTiles() {
 
 // Start application
 function init() {
-  console.log('init triggered');
   makeTiles();
   placeMines();
   restartListener();
