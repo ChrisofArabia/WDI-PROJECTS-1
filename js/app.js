@@ -2,6 +2,8 @@ var baseGridW = 16;
 var baseGridH = 16;
 var totalTiles = baseGridH * baseGridW;
 var minesNeeded = 40;
+var mineCount;
+var mineCountValue;
 var minesPlaced = [];
 var tiles;
 var compass = {
@@ -14,6 +16,10 @@ var compass = {
   w: -1,
   nw: -baseGridH - 1
 };
+var minutesLabel;
+var secondsLabel;
+var totalSeconds;
+var time;
 
 function pad(val, padLength) {
   var valString = val + '';
@@ -84,17 +90,17 @@ function playSound(sound) {
   audio.play();
 }
 
-function setTime(minutesLabel, secondsLabel, totalSeconds) {
+function setTime() {
   ++totalSeconds;
   secondsLabel.innerHTML = pad(totalSeconds%60, 2);
   minutesLabel.innerHTML = pad(parseInt(totalSeconds/60), 2);
 }
 
 function timerDisplay() {
-  var minutesLabel = document.getElementById('minutes');
-  var secondsLabel = document.getElementById('seconds');
-  var totalSeconds = 0;
-  setInterval(setTime(minutesLabel, secondsLabel, totalSeconds), 1000);
+  minutesLabel = document.getElementById('minutes');
+  secondsLabel = document.getElementById('seconds');
+  totalSeconds = 0;
+  time         = setInterval(setTime, 1000);
 }
 
 // Place mines in random locations on the board and record position in an array
@@ -159,34 +165,17 @@ function callWinnerModal() {
   };
 }
 
-function checkForWin(counter) {
-  console.log('checkForWin called: ');
-  if (counter === (totalTiles - minesNeeded) ) {
-    console.log('We have a winner! New Game?');
-    callWinnerModal();
-  }
-}
-
 function countCheckedTiles() {
-  var allLis = document.getElementsByTagName('li');
-  // console.log(allLis.length);
-  var tilesCheckedCount = 0;
-  // console.log('tilesCheckedCount is: ' + tilesCheckedCount);
-  var tileChecked;
-  for (var i = 0; i < allLis.length; i++) {
-    tileChecked = allLis[i].getAttribute('data-checked');
-    // console.log(tileChecked);
-    if (tileChecked === 'true') {
-      tilesCheckedCount = tilesCheckedCount + 1;
-    }
+  if ((totalTiles - minesNeeded) === document.querySelectorAll('[data-checked]').length+1) {
+    return callWinnerModal();
   }
-  console.log('tilesCheckedCount is: ' + tilesCheckedCount);
-  checkForWin(tilesCheckedCount);
 }
 
 // Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
   if (tiles[centreTile].getAttribute('data-checked')) return false;
+  // Check for win
+  countCheckedTiles();
 
   // Prevent being checked as the center again
   tiles[centreTile].setAttribute('data-checked', true);
@@ -248,7 +237,12 @@ function disableTiles() {
 function logTile(e) {
   e.preventDefault();
   var tile = this;
+  if (document.querySelectorAll('[data-checked]').length === 0) {
+    timerDisplay();
+  }
   if (minesPlaced.includes(tiles.indexOf(tile))) {
+    // Stop timer
+    clearInterval(time);
     tile.setAttribute('class', 'tile redMine');
     // Call function to set all other mines grey
     greyMines(tiles.indexOf(tile));
@@ -261,17 +255,16 @@ function logTile(e) {
     tileValue = parseInt(tileValue);
     // console.log('The tile clicked was number: ' + tileValue);
     playSound('tileSound');
-    timerDisplay();
     getTileArray(tileValue);
   }
 }
 
 function reduceMineCount() {
-  var mineCount = document.getElementById('minecount');
-  var mineCountValue = parseInt(mineCount.innerHTML);
+  mineCount = document.getElementById('minecount');
+  mineCountValue = parseInt(mineCount.innerHTML);
   mineCountValue = mineCountValue - 1;
   console.log(mineCountValue);
-  if ( mineCountValue >= 0) {
+  if (mineCountValue >= 0) {
     mineCount.innerHTML = pad(mineCountValue, 3);
   }
 }
@@ -279,6 +272,7 @@ function reduceMineCount() {
 // Set the flag icon on right-click
 function setFlag(e) {
   e.preventDefault();
+  if (mineCountValue === 0) return false;
   this.setAttribute('class', 'tile flag');
   reduceMineCount();
   return false;
