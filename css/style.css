@@ -236,7 +236,7 @@ li {
 /* Modal Body */
 .modal-body {
   min-height: 5em;
-  padding: 2px 16px;
+  padding: 2em;
 }
 
 /* Modal Content */
@@ -273,6 +273,14 @@ li {
   cursor: pointer;
   color: black;
   text-decoration: none;
+}
+
+.githubLink,.githubLink:visited {
+  color: #f0f0f0;
+}
+
+.githubLink:hover, .githubLink:focus {
+  color: #fff;
 }
 
 /* Add Animation */

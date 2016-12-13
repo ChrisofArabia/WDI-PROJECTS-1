@@ -84,6 +84,9 @@ function playSound(sound) {
     case 'flag':
       audio = new Audio('audio/flag_sound.mp3');
       break;
+    case 'tada':
+      audio = new Audio('audio/tada.mp3');
+      break;
     default:
       break;
   }
@@ -151,6 +154,10 @@ function callWinnerModal() {
   var modal = document.getElementById('winnerModal');
 // Get the <span> element that closes the modal
   var span = document.getElementsByClassName('close')[0];
+// Get the span element for the winning time in seconds
+  var winningTimeEl = document.getElementById('winningSeconds');
+// Set the number of seconds in the modal
+  winningTimeEl.innerHTML = totalSeconds;
 // When the user clicks on the button, open the modal
   modal.style.display = 'block';
 // When the user clicks on <span> (x), close the modal
@@ -167,6 +174,9 @@ function callWinnerModal() {
 
 function countCheckedTiles() {
   if ((totalTiles - minesNeeded) === document.querySelectorAll('[data-checked]').length+1) {
+    clearInterval(time);
+    disableTiles();
+    playSound('tada');
     return callWinnerModal();
   }
 }
@@ -230,6 +240,7 @@ function disableTiles() {
   var checkedTiles = document.getElementsByTagName('li');
   for (var i = 0; i < checkedTiles.length; i++) {
     checkedTiles[i].removeEventListener('click', logTile);
+    checkedTiles[i].removeEventListener('contextmenu', setFlag);
   }
 }
 
@@ -275,6 +286,7 @@ function setFlag(e) {
   if (mineCountValue === 0) return false;
   this.setAttribute('class', 'tile flag');
   reduceMineCount();
+  playSound('flag');
   return false;
 }
 
