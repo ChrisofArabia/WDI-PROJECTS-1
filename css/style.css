@@ -1,10 +1,31 @@
+@font-face {
+  font-family: 'ds-digib';
+  src: url('../fonts/ds-digib.ttf') format('truetype');
+}
+
 body {
-  background-color: #ddccbb;
+  background-color: #666;
+}
+
+header {
+  background-color: #333;
+  border-top: 4px solid #ddd;
+  border-right: 4px solid #999;
+  border-bottom: 4px solid #999;
+  border-left: 4px solid #ddd;
+  padding: 10px;
+  text-align: center;
 }
 
 main {
+  border-top: 5px solid #999;
+  border-right: 5px solid #ddd;
+  border-bottom: 5px solid #ddd;
+  border-left: 5px solid #999;
   margin: 0 auto;
+  margin-top: 10px;
   max-width: 600px;
+  padding: 5px;
 }
 
 li {
@@ -23,11 +44,21 @@ li {
 }
 
 .display {
+  background-color: #000;
+  border-top: 3px solid #666;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  border-left: 3px solid #666;
+  color: #f00;
   display: inline-block;
+  font-family: 'ds-digib', sans-serif;
+  font-size: 3em;
+  padding: 5px 5px 0 5px;
 }
 
 .smileyface {
   display: inline-block;
+  vertical-align: sub;;
 }
 
 .minesweeper {
@@ -35,8 +66,10 @@ li {
   border-right: 4px solid #999;
   border-bottom: 4px solid #999;
   border-left: 4px solid #ddd;
-  margin: 0 auto;
-  margin-top: 3em;
+  margin-top: 1.2em;
+  margin-right: auto;
+  margin-bottom: 1.2em;
+  margin-left: auto;
   max-width: 560px;
   overflow: hidden;
 }
@@ -74,7 +107,6 @@ li {
   padding-top: 1em;
   text-align: center;
 }
-
 
 /* Number colours */
 /* 1 */

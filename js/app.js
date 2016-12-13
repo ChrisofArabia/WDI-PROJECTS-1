@@ -15,6 +15,33 @@ var compass = {
 };
 var tiles;
 
+function resetMineCounter() {
+  var minesDisplay = document.getElementById('display1');
+  minesDisplay.innerHTML = '040';
+}
+
+function setSmiley() {
+  var smiley = document.getElementById('smileyFace');
+  smiley.setAttribute('src', 'images/smiley.jpg');
+}
+
+function gameReset() {
+  console.log('gameReset called');
+  var msBoard = document.getElementById('minesweeper');
+  msBoard.innerHTML = '';
+  makeTiles();
+  minesPlaced = [];
+  placeMines();
+  setSmiley();
+  resetMineCounter();
+}
+
+function restartListener() {
+  // Set event listener for new game;
+  var newGame = document.getElementById('newGame');
+  newGame.addEventListener('click', gameReset);
+}
+
 function playSound(sound) {
   var audio;
   switch(sound) {
@@ -208,9 +235,10 @@ function makeTiles() {
 
 // Start application
 function init() {
+  console.log('init triggered');
   makeTiles();
   placeMines();
-  // setTimeout(setMineClass, 150);
+  restartListener();
 }
 
 document.addEventListener('DOMContentLoaded', init, false);
