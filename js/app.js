@@ -140,6 +140,50 @@ function numberColor(minesTouched, tileElement) {
   }
 }
 
+function callWinnerModal() {
+// Get the modal
+  var modal = document.getElementById('winnerModal');
+// Get the <span> element that closes the modal
+  var span = document.getElementsByClassName('close')[0];
+// When the user clicks on the button, open the modal
+  modal.style.display = 'block';
+// When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = 'none';
+  };
+// When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+}
+
+function checkForWin(counter) {
+  console.log('checkForWin called: ');
+  if (counter === (totalTiles - minesNeeded) ) {
+    console.log('We have a winner! New Game?');
+    callWinnerModal();
+  }
+}
+
+function countCheckedTiles() {
+  var allLis = document.getElementsByTagName('li');
+  // console.log(allLis.length);
+  var tilesCheckedCount = 0;
+  // console.log('tilesCheckedCount is: ' + tilesCheckedCount);
+  var tileChecked;
+  for (var i = 0; i < allLis.length; i++) {
+    tileChecked = allLis[i].getAttribute('data-checked');
+    // console.log(tileChecked);
+    if (tileChecked === 'true') {
+      tilesCheckedCount = tilesCheckedCount + 1;
+    }
+  }
+  console.log('tilesCheckedCount is: ' + tilesCheckedCount);
+  checkForWin(tilesCheckedCount);
+}
+
 // Create an array of the 8 tiles around the original tile clicked
 function getTileArray(centreTile) {
   if (tiles[centreTile].getAttribute('data-checked')) return false;

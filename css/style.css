@@ -5,6 +5,28 @@
 
 body {
   background-color: #666;
+  font-family: helvetica, arial, sans-serif;
+}
+
+h1 {
+  font-size: 2em;
+  padding: 10px;
+}
+
+h2 {
+  font-size: 1.5em;
+  padding: 7px;
+}
+
+h3 {
+  font-size: 1.2em;
+  padding: 5px;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.2em;
+  padding: 0.5em;
 }
 
 header {
@@ -36,11 +58,13 @@ button {
   text-decoration: none;
   vertical-align: super;
 }
+
 button:hover {
   border-top-color: #787878;
   background: #787878;
   color: #ccc;
 }
+
 button:active {
   border-top-color: #5e5e5e;
   background: #5e5e5e;
@@ -114,21 +138,6 @@ li {
   overflow: hidden;
 }
 
-/*.tile {
-background-color: silver;
-border-top: 1px solid #fff;
-border-right: 2px solid #666;
-border-bottom: 2px solid #666;
-border-left: 1px solid #fff;
-display: inline-block;
-float: left;
-font-weight: bolder;
-height: 32px;
-line-height: 32px;
-text-align: center;
-width: 32px;
-}*/
-
 .greyMine {
   background-color: red;
   background-image: url("../images/grey_mine_32px.jpg");
@@ -200,4 +209,79 @@ width: 32px;
 .midGrey {
   background-color: #eee;
   color: #666;
+}
+
+/* The Modal (background) */
+.modal {
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  height: 100%; /* Full height */
+  left: 0;
+  overflow: auto; /* Enable scroll if needed */
+  position: fixed; /* Stay in place */
+  text-align: center;
+  top: 0;
+  width: 100%; /* Full width */
+  z-index: 1; /* Sit on top */
+}
+
+/* Modal Header */
+.modal-header {
+  background-color: #666;
+  color: #fdfdfd;
+  padding: 2px 16px;
+}
+
+/* Modal Body */
+.modal-body {
+  min-height: 5em;
+  padding: 2px 16px;
+}
+
+/* Modal Content */
+.modal-content {
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+  border: 1px solid #888;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  margin: 20% auto; /* 25% from the top and centered */
+  padding: 0;
+  position: relative;
+  width: 70%;
+  background-color: #fdfdfd;
+}
+
+/* Modal Footer */
+.modal-footer {
+  background-color: #666;
+  color: #fdfdfd;
+  padding: 2px 16px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover, .close:focus {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+  from {top: -300px; opacity: 0}
+  to {top: 0; opacity: 1}
 }

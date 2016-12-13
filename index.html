@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="x-ua-compatible" content="IE=edge">
-    <title>Minesweeper</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
-    <!--
-    <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    -->
-    <script src="js/app.js" charset="utf-8"></script>
-  </head>
-  <body>
-    <main>
-      <header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <title>Minesweeper</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+  <!--
+  <script src="http://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+-->
+<script src="js/app.js" charset="utf-8"></script>
+</head>
+<body>
+  <main>
+    <header>
       <button id="settings" type="button" name="button">Settings</button>
-        <div id="display1" class="display1">
-          <label id="minecount">040</label>
-        </div>
-        <img id="smileyFace" class="smileyface" src="images/smiley.jpg" alt="Smiley face">
-        <div id="display2" class="display2">
-          <label id="minutes">00</label>:<label id="seconds">00</label>
-        </div>
-        <button id="newGame" type="button" name="button">New Game</button>
-      </header>
-      <ul id="minesweeper" class="minesweeper"></ul>
-    </main>
-
-  </body>
+      <div id="display1" class="display1">
+        <label id="minecount">040</label>
+      </div>
+      <img id="smileyFace" class="smileyface" src="images/smiley.jpg" alt="Smiley face">
+      <div id="display2" class="display2">
+        <label id="minutes">00</label>:<label id="seconds">00</label>
+      </div>
+      <button id="newGame" type="button" name="button">New Game</button>
+    </header>
+    <ul id="minesweeper" class="minesweeper"></ul>
+  </main>
+  <!-- The Modal -->
+  <div id="winnerModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close">&times;</span>
+        <h2>Chris Perry's Minesweeper Game</h2>
+      </div>
+      <div class="modal-body">
+        <p>You Won!</p>
+        <p>You completed the game in 'n' seconds</p>
+      </div>
+      <div class="modal-footer">
+        <h3>Modal Footer</h3>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
