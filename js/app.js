@@ -55,7 +55,7 @@ function setFrowney() {
 }
 
 function gameReset() {
-  console.log('gameReset called');
+  // console.log('gameReset called');
   var msBoard = document.getElementById('minesweeper');
   msBoard.innerHTML = '';
   makeTiles();
@@ -274,7 +274,7 @@ function reduceMineCount() {
   mineCount = document.getElementById('minecount');
   mineCountValue = parseInt(mineCount.innerHTML);
   mineCountValue = mineCountValue - 1;
-  console.log(mineCountValue);
+  // console.log(mineCountValue);
   if (mineCountValue >= 0) {
     mineCount.innerHTML = pad(mineCountValue, 3);
   }
