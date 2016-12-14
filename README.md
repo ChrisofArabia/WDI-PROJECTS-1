@@ -20,10 +20,12 @@ I chose the game Minesweeper as I felt it represented an interesting range of ch
 - Early use of jQuery was refactored out as it was blocking progress
 - Keeping the code ‘DRY’
 
-##Furture Development
+##Future Development
 - Extend use of OOP
 - Reduce the size of the codebase
 - Add other grid size options (9x9, 30x16)
 - Make the game playable on a touchscreen or mobile devices
 - Convert to a Progressive Web App (PWA)
 
+##Live Game Version
+- a live version of the game can be found and played at ['Minesweeper'](https://frozen-eyrie-56010.herokuapp.com/)
