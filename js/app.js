@@ -3,12 +3,11 @@ function init() {
   const baseGridH = 16;
   const totalTiles = baseGridH * baseGridW;
   const minesNeeded = 40;
+  const msBoard = document.getElementById('minesweeper');
   const mineCount = document.getElementById('minecount');
-  let mineCountValue;
-  let minesPlaced = [];
-  let tiles;
   const allTiles = document.getElementsByTagName('li');
-  // let counter = 200;
+  const minutesLabel = document.getElementById('minutes');
+  const secondsLabel = document.getElementById('seconds');
   const compass = {
     n: -baseGridH,
     ne: -baseGridH + 1,
@@ -19,13 +18,15 @@ function init() {
     w: -1,
     nw: -baseGridH - 1
   };
-  let minutesLabel;
-  let secondsLabel;
+  let mineCountValue;
+  let minesPlaced = [];
+  let tiles;
   let totalSeconds;
   let time;
+  // let counter = 200;
 
   function pad(val, padLength) {
-    var valString = val + '';
+    const valString = val + '';
     if (padLength - valString.length === 1 )  {
       return '0' + valString;
     } else if ( padLength - valString.length === 2 ) {
@@ -36,41 +37,40 @@ function init() {
   }
 
   function resetClock() {
-    var minutesLabel = document.getElementById('minutes');
-    var secondsLabel = document.getElementById('seconds');
+    totalSeconds = 0;
     minutesLabel.innerHTML = pad('0', 2);
     secondsLabel.innerHTML = pad('0', 2);
   }
 
   function setSmiley() {
-    var smiley = document.getElementById('smileyFace');
+    const smiley = document.getElementById('smileyFace');
     smiley.setAttribute('src', 'images/smiley.jpg');
   }
 
   function setFrowney() {
-    var frowney = document.getElementById('smileyFace');
+    const frowney = document.getElementById('smileyFace');
     frowney.setAttribute('src', 'images/frowney.jpg');
   }
 
   function gameReset() {
-    var msBoard = document.getElementById('minesweeper');
     msBoard.innerHTML = '';
     makeTiles();
     minesPlaced = [];
     placeMines();
     setSmiley();
     mineCount.innerHTML = pad(minesNeeded, 3);
+    clearInterval(time);
     resetClock();
   }
 
-  function restartListener() {
   // Set event listener for new game;
-    var newGame = document.getElementById('newGame');
+  function restartListener() {
+    const newGame = document.getElementById('newGame');
     newGame.addEventListener('click', gameReset);
   }
 
   function playSound(sound) {
-    var audio;
+    let audio;
     switch(sound) {
       case 'boomSound':
         audio = new Audio('audio/explosion_sound.mp3');
@@ -97,16 +97,14 @@ function init() {
   }
 
   function timerDisplay() {
-    minutesLabel = document.getElementById('minutes');
-    secondsLabel = document.getElementById('seconds');
     totalSeconds = 0;
-    time         = setInterval(setTime, 1000);
+    time = setInterval(setTime, 1000);
   }
 
   // Place mines in random locations on the board and record position in an array
   function placeMines() {
     while (minesPlaced.length < minesNeeded) {
-      var mineIndex = Math.floor(Math.random() * totalTiles);
+      const mineIndex = Math.floor(Math.random() * totalTiles);
       if (!minesPlaced.includes(mineIndex)) {
         minesPlaced.push(mineIndex);
       }
@@ -146,9 +144,9 @@ function init() {
   }
 
   function callWinnerModal() {
-    var modal = document.getElementById('winnerModal');
-    var span = document.getElementsByClassName('close')[0];
-    var winningTimeEl = document.getElementById('winningSeconds');
+    const modal = document.getElementById('winnerModal');
+    const span = document.getElementsByClassName('close')[0];
+    const winningTimeEl = document.getElementById('winningSeconds');
     winningTimeEl.innerHTML = totalSeconds;
     modal.style.display = 'block';
     span.onclick = function() {
@@ -181,7 +179,7 @@ function init() {
     tiles[centreTile].style.backgroundColor = '#eee';
 
   // Uncomment the setTimeout() function if you need to visibly show how it works
-  // Also uncomment the 'let counter = 200' on line 11
+  // Also uncomment the 'let counter = 200' on line 26
   // setTimeout(function(){
   //   tiles[centreTile].style.backgroundColor = 'orange';
   // }, counter+= 200);
@@ -220,7 +218,7 @@ function init() {
 
   function greyMines(indexNum) {
     let tile;
-    for (var i = 0; i < minesPlaced.length; i++) {
+    for (let i = 0; i < minesPlaced.length; i++) {
       if ( minesPlaced[i] !== indexNum ) {
         tile = minesPlaced[i];
         allTiles[tile].setAttribute('class', 'tile greyMine');
@@ -230,7 +228,7 @@ function init() {
 
   // Removes all event listeners from tiles on win or loss
   function disableTiles() {
-    for (var i = 0; i < allTiles.length; i++) {
+    for (let i = 0; i < allTiles.length; i++) {
       allTiles[i].removeEventListener('click', logTile);
       allTiles[i].removeEventListener('contextmenu', setFlag);
     }
@@ -239,7 +237,7 @@ function init() {
   // Access index of tile being clicked
   function logTile(e) {
     e.preventDefault();
-    var tile = this;
+    const tile = this;
     if (document.querySelectorAll('[data-checked]').length === 0) {
       timerDisplay();
     }
@@ -254,7 +252,7 @@ function init() {
       // Remove click event listener from other tiles
       disableTiles();
     } else {
-      var tileValue = tile.getAttribute('data-value');
+      let tileValue = tile.getAttribute('data-value');
       tileValue = parseInt(tileValue);
       // console.log('The tile clicked was number: ' + tileValue);
       playSound('tileSound');
@@ -284,7 +282,7 @@ function init() {
   function addListener() {
     tiles = document.getElementsByClassName('tile');
     tiles = [].slice.call(tiles);
-    for (var i = 0; i < tiles.length; i++) {
+    for (let i = 0; i < tiles.length; i++) {
       tiles[i].addEventListener('click', logTile);
       tiles[i].addEventListener('contextmenu', setFlag, false);
     }
@@ -292,9 +290,9 @@ function init() {
 
   // Create tiles on board
   function makeTiles() {
-    var msBoard = document.getElementById('minesweeper');
-    for (var i = 0; i < totalTiles; i++) {
-      var tile = document.createElement('li');
+    const msBoard = document.getElementById('minesweeper');
+    for (let i = 0; i < totalTiles; i++) {
+      const tile = document.createElement('li');
       tile.setAttribute('class', 'tile');
       tile.setAttribute('data-value', i);
       msBoard.appendChild(tile);
