@@ -7,7 +7,8 @@ function init() {
   let mineCountValue;
   let minesPlaced = [];
   let tiles;
-  // var counter = 200;
+  const allTiles = document.getElementsByTagName('li');
+  // let counter = 200;
   const compass = {
     n: -baseGridH,
     ne: -baseGridH + 1,
@@ -41,11 +42,6 @@ function init() {
     secondsLabel.innerHTML = pad('0', 2);
   }
 
-  // function resetMineCounter() {
-  //   var minesDisplay = document.getElementById('display1');
-  //   minesDisplay.innerHTML = pad(minesNeeded, 3);
-  // }
-
   function setSmiley() {
     var smiley = document.getElementById('smileyFace');
     smiley.setAttribute('src', 'images/smiley.jpg');
@@ -57,7 +53,6 @@ function init() {
   }
 
   function gameReset() {
-  // console.log('gameReset called');
     var msBoard = document.getElementById('minesweeper');
     msBoard.innerHTML = '';
     makeTiles();
@@ -65,7 +60,6 @@ function init() {
     placeMines();
     setSmiley();
     mineCount.innerHTML = pad(minesNeeded, 3);
-    // resetMineCounter();
     resetClock();
   }
 
@@ -152,21 +146,14 @@ function init() {
   }
 
   function callWinnerModal() {
-  // Get the modal
     var modal = document.getElementById('winnerModal');
-  // Get the <span> element that closes the modal
     var span = document.getElementsByClassName('close')[0];
-  // Get the span element for the winning time in seconds
     var winningTimeEl = document.getElementById('winningSeconds');
-  // Set the number of seconds in the modal
     winningTimeEl.innerHTML = totalSeconds;
-  // When the user clicks on the button, open the modal
     modal.style.display = 'block';
-  // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
       modal.style.display = 'none';
     };
-  // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
       if (event.target === modal) {
         modal.style.display = 'none';
@@ -193,11 +180,13 @@ function init() {
     tiles[centreTile].setAttribute('data-checked', true);
     tiles[centreTile].style.backgroundColor = '#eee';
 
+  // Uncomment the setTimeout() function if you need to visibly show how it works
+  // Also uncomment the 'let counter = 200' on line 11
   // setTimeout(function(){
   //   tiles[centreTile].style.backgroundColor = 'orange';
   // }, counter+= 200);
 
-  // Loop through to get the possible indicies
+  // Loop through to get the possible indices
     const possibleIndices = Object.keys(compass).map(function(direction) {
       const index = centreTile + compass[direction];
       if (
@@ -205,7 +194,8 @@ function init() {
         index < totalTiles &&
         ((centreTile % baseGridH) - (index%baseGridH) < baseGridH-1) &&
         ((index%baseGridH) - (centreTile % baseGridH) < baseGridH-1) &&
-        !tiles[index].getAttribute('data-checked') // Ignore any which have been checked as center
+        // Ignore any which have been checked as center
+        !tiles[index].getAttribute('data-checked')
     ) {
         return index;
       }
@@ -229,24 +219,20 @@ function init() {
   }
 
   function greyMines(indexNum) {
-    // console.log('Tile index passed to greyMines: ' + indexNum);
-    var tiles = document.getElementsByTagName('li');
-    var tile;
-    // console.log(tiles);
+    let tile;
     for (var i = 0; i < minesPlaced.length; i++) {
       if ( minesPlaced[i] !== indexNum ) {
         tile = minesPlaced[i];
-        // console.log('Inside for loop within greyMines. minesPlaced[i] value is: ' + tile);
-        tiles[tile].setAttribute('class', 'tile greyMine');
+        allTiles[tile].setAttribute('class', 'tile greyMine');
       }
     }
   }
 
+  // Removes all event listeners from tiles on win or loss
   function disableTiles() {
-    var checkedTiles = document.getElementsByTagName('li');
-    for (var i = 0; i < checkedTiles.length; i++) {
-      checkedTiles[i].removeEventListener('click', logTile);
-      checkedTiles[i].removeEventListener('contextmenu', setFlag);
+    for (var i = 0; i < allTiles.length; i++) {
+      allTiles[i].removeEventListener('click', logTile);
+      allTiles[i].removeEventListener('contextmenu', setFlag);
     }
   }
 
