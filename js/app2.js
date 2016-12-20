@@ -1,31 +1,35 @@
-function init() {
-  const baseGridW = 16;
-  const baseGridH = 16;
-  const totalTiles = baseGridH * baseGridW;
-  const minesNeeded = 40;
-  const msBoard = document.getElementById('minesweeper');
-  const mineCount = document.getElementById('minecount');
-  const allTiles = document.getElementsByTagName('li');
-  const minutesLabel = document.getElementById('minutes');
-  const secondsLabel = document.getElementById('seconds');
-  const compass = {
-    n: -baseGridH,
-    ne: -baseGridH + 1,
+const Mines = Mines || {};
+
+this.baseGridW = 16;
+this.baseGridH = 16;
+this.totalTiles = this.baseGridH * this.baseGridW;
+this.minesNeeded = 40;
+this.mineCountValue;
+this.minesPlaced = [];
+this.tiles;
+this.totalSeconds;
+this.time;
+
+this.init = function() {
+  this.msBoard = document.getElementById('minesweeper');
+  this.mineCount = document.getElementById('minecount');
+  this.allTiles = document.getElementsByTagName('li');
+  this.minutesLabel = document.getElementById('minutes');
+  this.secondsLabel = document.getElementById('seconds');
+  this.compass = {
+    n: - Mines.baseGridH,
+    ne: - Mines.baseGridH + 1,
     e: 1,
-    se: baseGridH + 1,
-    s: baseGridH,
-    sw: baseGridH - 1,
+    se: Mines.baseGridH + 1,
+    s: Mines.baseGridH,
+    sw: Mines.baseGridH - 1,
     w: -1,
-    nw: -baseGridH - 1
+    nw: - Mines.baseGridH - 1
   };
-  let mineCountValue;
-  let minesPlaced = [];
-  let tiles;
-  let totalSeconds;
-  let time;
+
   // let counter = 200;
 
-  function pad(val, padLength) {
+  this.pad = function(val, padLength) {
     const valString = val + '';
     if (padLength - valString.length === 1 )  {
       return '0' + valString;
@@ -34,9 +38,9 @@ function init() {
     } else {
       return valString;
     }
-  }
+  };
 
-  function resetClock() {
+  this.resetClock = function() {
     totalSeconds = 0;
     minutesLabel.innerHTML = pad('0', 2);
     secondsLabel.innerHTML = pad('0', 2);
@@ -112,7 +116,7 @@ function init() {
   }
 
   function numberColor(minesTouched, tileElement) {
-    // console.log(tileClasses);
+  // console.log(tileClasses);
     switch (minesTouched) {
       case 1:
         tileElement.setAttribute('class', 'midBlue');
@@ -171,20 +175,20 @@ function init() {
   // Create an array of the 8 tiles around the original tile clicked
   function getTileArray(centreTile) {
     if (tiles[centreTile].getAttribute('data-checked')) return false;
-    // Check for win
+  // Check for win
     countCheckedTiles();
 
-    // Prevent being checked as the center again
+  // Prevent being checked as the center again
     tiles[centreTile].setAttribute('data-checked', true);
     tiles[centreTile].style.backgroundColor = '#eee';
 
-    // Uncomment the setTimeout() function if you need to visibly show how it works
-    // Also uncomment the 'let counter = 200' on line 26
-    // setTimeout(function(){
-    //   tiles[centreTile].style.backgroundColor = 'orange';
-    // }, counter+= 200);
+  // Uncomment the setTimeout() function if you need to visibly show how it works
+  // Also uncomment the 'let counter = 200' on line 26
+  // setTimeout(function(){
+  //   tiles[centreTile].style.backgroundColor = 'orange';
+  // }, counter+= 200);
 
-    // Loop through to get the possible indices
+  // Loop through to get the possible indices
     const possibleIndices = Object.keys(compass).map(function(direction) {
       const index = centreTile + compass[direction];
       if (
@@ -194,7 +198,7 @@ function init() {
         ((index%baseGridH) - (centreTile % baseGridH) < baseGridH-1) &&
         // Ignore any which have been checked as center
         !tiles[index].getAttribute('data-checked')
-      ) {
+    ) {
         return index;
       }
     }).filter(function(x) {
@@ -268,31 +272,14 @@ function init() {
     }
   }
 
-  function increaseFlagCount() {
-    mineCountValue = parseInt(mineCount.innerHTML);
-    mineCountValue = mineCountValue + 1;
-    if (mineCountValue >= 0) {
-      mineCount.innerHTML = pad(mineCountValue, 3);
-    }
-  }
-
   // Set the flag icon on right-click
   function setFlag(e) {
     e.preventDefault();
     if (mineCountValue === 0) return false;
-    if (this.getAttribute('class') === 'tile flag'){
-      // console.log('yes');
-      this.setAttribute('class', 'tile');
-      if (parseInt(mineCount.innerHTML) < 40){
-        increaseFlagCount();
-      }
-      return false;
-    } else {
-      this.setAttribute('class', 'tile flag');
-      reduceFlagCount();
-      playSound('flag');
-      return false;
-    }
+    this.setAttribute('class', 'tile flag');
+    reduceFlagCount();
+    playSound('flag');
+    return false;
   }
 
   // Add event listener for click event on each tile
@@ -316,7 +303,7 @@ function init() {
     }
     addListener();
   }
-
+// *****************************************
   makeTiles();
   mineCount.innerHTML = pad(minesNeeded, 3);
   placeMines();
