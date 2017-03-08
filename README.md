@@ -1,7 +1,9 @@
 # WDI_PROJECT_1 - 'Minesweeper'
-This was my first project for my Web Development Immersive course at General Assembly London
+This was my first project for my Web Development Immersive course (WDI_24) at General Assembly London
 
 I chose the game Minesweeper as I felt it represented an interesting range of challenges around the logic needed to implement the game play.
+
+![Winning game play](docs/winning_game.png)
 
 ##Aims
 - Complete a re-creation of the ‘Minesweeper’ game found on MS Windows operating systems
