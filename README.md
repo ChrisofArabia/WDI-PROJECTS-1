@@ -10,6 +10,11 @@ I chose the game Minesweeper as I felt it represented an interesting range of ch
 - Ensure it would play on modern browsers using a mouse with left/right buttons
 - Style it to replicate the ‘classic’ game look and feel
 
+##Technologies Used
+- HTML
+- CSS
+- JavaScript (inc. some ES6)
+
 ##Successes
 - The game was written in ‘vanilla’ JS with no use of jQuery or 3rd Party libraries
 - Grasping the core concept of how the game logic worked and planning the pseudo code around that
@@ -31,3 +36,4 @@ I chose the game Minesweeper as I felt it represented an interesting range of ch
 
 ##Live Game Version
 - a live version of the game can be found and played at ['Minesweeper'](https://frozen-eyrie-56010.herokuapp.com/)
+- To get started, click on a random tile to reveal what it covers, or right-click to flag a square as being suspected of covering a mine.
