@@ -3,7 +3,7 @@ This was my first project for my Web Development Immersive course (WDI_24) at Ge
 
 I chose the game Minesweeper as I felt it represented an interesting range of challenges around the logic needed to implement the game play.
 
-![Winning game play](docs/winning_game.png)
+![Winning game play](docs/project_01_winning_game.png)
 
 ##Aims
 - Complete a re-creation of the ‘Minesweeper’ game found on MS Windows operating systems
